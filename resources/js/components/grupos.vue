@@ -571,7 +571,7 @@
           axios.put('/grupos/actualizar', {
             'descripcion' : this.descripcion,
             'id_curso' : this.id_curso,
-            'id_academia' : this.id_academia,
+            'id_academia' : this.id_academia
 
             }).then(function (response) {
               me.cerrarModal();

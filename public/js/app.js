@@ -51143,7 +51143,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Cargar pdf")]
+                      [_vm._v("Descargar reporte")]
                     )
                   ])
                 ])

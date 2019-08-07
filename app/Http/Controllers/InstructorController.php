@@ -29,37 +29,37 @@ class InstructorController extends Controller
         }*/
 
         //Si el usuario es administrador se cargan todos los campos
-        if(Auth::user()->tipo==1){
+        //if(Auth::user()->tipo==1){
             if ($buscar==''){
               $instructores = Instructor::join('academia', 'instructor.id_academia','=','academia.id')
                   ->select('instructor.id','instructor.nombre', 'instructor.apellido', 'instructor.correo','instructor.id_academia', 'academia.nombre as nombre_academia', 'instructor.condicion')
                   ->orderBy('instructor.id', 'desc')->paginate(2);
             }
-            else{
+           else{
               $instructores = Instructor::join('academia', 'instructor.id_academia','=','academia.id')
                   ->select('instructor.id','instructor.nombre', 'instructor.apellido', 'instructor.correo','instructor.id_academia', 'academia.nombre as nombre_academia', 'instructor.condicion')
                 ->where('instructor.'.$criterio, 'like', '%'. $buscar . '%')
                 ->orderBy('instructor.id', 'desc')->paginate(2);
             }
-        } else if (Auth::user()->tipo==2){ //si no es admin, y es contacto, se cargan solo los instructores que coincidan
+       /* } else if (Auth::user()->tipo==2){ //si no es admin, y es contacto, se cargan solo los instructores que coincidan
           if ($buscar==''){
               $id_contacto = Auth::user()->id_contacto;
               echo 'el id es '.$id_contacto;
 
-
+*/
             /*$contactos = Contacto::join('usuario', 'contacto.id_usuario','=','usuario.id')
               ->join('academia', 'contacto.id_academia','=','academia.id')
               ->select('contacto.id','contacto.nombre', 'contacto.apellido', 'contacto.correo','contacto.cargo', 'contacto.pais', 'contacto.telefono', 'contacto.extension', 'contacto.idioma', 'contacto.id_usuario', 'usuario.usuario as nombre_usuario', 'academia.nombre as nombre_academia',  'contacto.condicion')
               ->where('contacto.id == '.$id_contacto);
             */
 
-              $instructores = Instructor::join('academia', 'instructor.id_academia','=','academia.id')
+             /* $instructores = Instructor::join('academia', 'instructor.id_academia','=','academia.id')
                   ->select('instructor.id','instructor.nombre', 'instructor.apellido', 'instructor.correo','instructor.id_academia', 'academia.nombre as nombre_academia', 'instructor.condicion')
                   ->orderBy('instructor.id', 'desc')->paginate(2)
                   //->where('instructor.'.$criterio, 'like', '%'. $buscar . '%')
                   ->where('instructor.id_academia == contacto.id_academia');
-            }
-        }
+            }*/
+        //}
 
         return [
             'pagination' => [
@@ -89,6 +89,7 @@ class InstructorController extends Controller
         $instructor->correo = $request->correo;
         $instructor->id_academia = $request->id_academia;
         $instructor->condicion = '1';
+        $instructor->requiere_orientacion = 0;
         $instructor->encurso = 0;
         $instructor->save();
     }

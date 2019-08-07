@@ -58,7 +58,7 @@
 
               <div class="col-md-1">
           <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="abrirModal('instructor', 'registrar')">Agregar instructor</button>
-          <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="cargarPDF()">Cargar pdf</button>
+          <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="cargarPDF()">Descargar reporte</button>
               </div>
           </div>
 

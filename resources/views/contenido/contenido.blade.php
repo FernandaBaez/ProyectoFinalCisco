@@ -44,7 +44,7 @@
         <inscribir></inscribir>
       </template>
       <template v-if="menu==9">
-        <tickets></tickets>
+          <chat></chat>
       </template>
     @else
     @endif
