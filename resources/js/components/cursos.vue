@@ -1,18 +1,19 @@
 <template>
 <div>
+  <div class="container">
         <div class="row">
           <div class="page-header">
             <div class="d-flex align-items-center">
                 <h2 class="page-header-title">Cursos</h2>
                 <div>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="/"><i class="ti ti-home"></i></a></li>
                     <li class="breadcrumb-item active">Cursos</li>
                 </ul>
                 </div>
             </div>
           </div>
-      </div>
+        </div>
 
       <div class="row">
         <div class="col-xl-12">
@@ -25,7 +26,7 @@
 
                             <select class="selectpicker show-menu-arrow" v-model="criterio">
                                 <option value="nombre" selected>Nombre</option>
-                                <option value="direccion">Descripción</option>
+                                <option value="direccion" selected>Descripción</option>
                             </select>
                             &nbsp;
 
@@ -49,6 +50,7 @@
                               <tr>
                                   <th>Nombre</th>
                                   <th>Descripción</th>
+                                  <th>Fecha de creación</th>
                                   <th><span style="width:100px;">Estado</span></th>
                                   <th>Actions</th>
                               </tr>
@@ -57,6 +59,7 @@
                               <tr v-for="cursos in arrayCurso" :key="cursos.id">
                                 <td v-text="cursos.nombre"></td>
                                 <td v-text="cursos.descripcion"></td>
+                                <td v-text="cursos.fecha"></td>
                                 <td>
                                   <div v-if="cursos.condicion">
                                     <span style="width:100px;"><span class="badge-text badge-text-small success">Activo</span></span>
@@ -137,6 +140,22 @@
                                       <input type="text" class="form-control" placeholder="Ingrese la descripcion" v-model="descripcion">
                                   </div>
                               </div>
+
+                              <div class="form-group row d-flex align-items-center mb-5">
+                                  <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Fecha</label>
+                                  <div class="col-lg-5">
+                                      <div class="form-group">
+                                          <div class="input-group">
+                                              <span class="input-group-addon">
+                                                  <i class="la la-calendar"></i>
+                                              </span>
+                                              <input type="date" class="form-control" v-model="fecha" placeholder="Select value">
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+
                               <div v-show="errorCurso" class="form-group row div-error">
                                 <div class="text-center text-error">
                                   <div class="alert alert-outline-danger dotted" role="alert" v-for="error in errorMostrarMsjCurso" :key="error" v-text="error">
@@ -162,6 +181,7 @@
     </div>
     <!-- End Large Modal -->
 
+  </div>
 </div>
 </template>
 
@@ -172,6 +192,7 @@
           cursoId : 0,
           nombre : '',
           descripcion : '',
+          fecha : '',
           arrayCurso : [],
           modal : 0,
           tituloModal : '',
@@ -250,9 +271,9 @@
           let me = this;
           axios.post('/cursos/registrar', {
             'nombre': this.nombre,
-            'descripcion' : this.descripcion
-
-            }).then(function (response) {
+            'descripcion' : this.descripcion,
+            'fecha' : this.fecha
+             }).then(function (response) {
               me.cerrarModal();
               me.listarCurso(1,'', 'curso');
             })
@@ -272,7 +293,8 @@
           axios.put('/cursos/actualizar', {
             'nombre': this.nombre,
             'descripcion' : this.descripcion,
-            'id' : this.cursoId
+            'id' : this.cursoId,
+            'fecha' : this.fecha
 
             }).then(function (response) {
               me.cerrarModal();
@@ -318,7 +340,7 @@
         validarCurso(){
           this.errorCurso = 0;
           this.errorMostrarMsjCurso = [];
-
+          if(this.fecha=='') this.errorMostrarMsjCurso.push("La fecha no puede estar vacía");
           if(!this.nombre) this.errorMostrarMsjCurso.push("El nombre del curso no puede estar vacío");
           if(this.errorMostrarMsjCurso.length) this.errorCurso = 1;
 
@@ -334,6 +356,7 @@
                     this.modal = 1;
                     this.nombre = '';
                     this.descripcion = '';
+                    this.fecha = '';
                     this.tituloModal = "Registrar Curso";
                     this.tipoAccion = 1;
                     break;
@@ -345,6 +368,7 @@
                     this.tipoAccion=2;
                     this.cursoId = data['id'];
                     this.nombre = data['nombre'];
+                    this.fecha = data['fecha'];
                     this.descripcion = data['descripcion'];
 
                   }
@@ -361,6 +385,7 @@
           this.tituloModal = '';
           this.nombre = '';
           this.descripcion = '';
+          this.fecha = '';
 
         }
       },

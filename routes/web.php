@@ -13,12 +13,14 @@
 
 Route::group(['middleware' => ['guest']], function () {
   Route::get('/', 'Auth\LoginController@showLoginForm');
-  Route::post('/login', 'Auth\LoginController@login')->name('login');
+  Route::post('/loginTwo', 'Auth\LoginController@login')->name('loginTwo');
+  Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 });
 
 Route::group(['middleware' => ['auth']], function () {
 
   Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+  Route::get('/dash', 'dash');
 
   Route::get('/main', function () {
       return view('contenido/contenido');
@@ -35,14 +37,17 @@ Route::group(['middleware' => ['auth']], function () {
 
   });
 
-  //Route::group(['middleware' => ['Administrador']], function(){
+  Route::group(['middleware' => ['Administrador']], function(){
     //Rutas de instructores
     Route::get('/instructor', 'InstructorController@index');
     Route::post('/instructor/registrar', 'InstructorController@store');
     Route::put('/instructor/actualizar', 'InstructorController@update');
+    Route::put('/instructor/updateenCurso', 'InstructorController@updateenCurso');
     Route::put('/instructor/desactivar', 'InstructorController@desactivar');
     Route::put('/instructor/activar', 'InstructorController@activar');
     Route::get('/instructor/selectInstructor', 'InstructorController@selectInstructor');
+    Route::get('/instructor/selectInstructorCO', 'InstructorController@selectInstructorCO');
+    Route::get('/instructor/listarPDF', 'InstructorController@listarPDF')->name('articulos_pdf');
 
     //Rutas de cursos
     Route::get('/cursos', 'CursoController@index');
@@ -90,8 +95,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put('/inscripcion/desactivar', 'InscripcionController@desactivar');
     Route::put('/inscripcion/activar', 'InscripcionController@activar');
 
-  
-//});
+    //Rutas de ticket
+    Route::get('/ticket', 'TicketController@index');
+    Route::post('/ticket/registrar', 'TicketController@store');
+
+    //Rutas de msj
+    Route::get('/mensaje', 'MensajeController@index');
+    Route::post('/mensaje/registrar', 'MensajeController@store');
+  });
 
 });
 

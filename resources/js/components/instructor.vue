@@ -8,24 +8,24 @@
               <h2 class="page-header-title">Instructores</h2>
               <div>
               <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="/"><i class="ti ti-home"></i></a></li>
                   <li class="breadcrumb-item active">Instructores</li>
               </ul>
               </div>
           </div>
         </div>
     </div>
-      
-      
-      
+
+
+
     <!-- Sorting -->
-      
+
     <div class="row">
     <div class="col-xl-12">
     <div class="widget has-shadow">
      <div class="widget-header bordered no-actions d-flex align-items-center">
-       
-             <!-- Begin Search Box 
+
+             <!-- Begin Search Box
                     <div class="search-box">
                         <button class="dismiss"><i class="ion-close-round"></i></button>
                         <form id="searchForm" action="#" role="search">
@@ -33,11 +33,11 @@
                         </form>
                     </div>
                 End Search Box-->
-       
+
         <div class="form-group row">
               <div class="col-md-11">
                   <div class="input-group">
-                     <!--  
+                     <!--
                     <select class="form-control col-md-3" v-model="criterio">
                         <option value="nombre">Nombre</option>
                         <option value="direccion">Direccion</option>
@@ -48,26 +48,27 @@
                             <option value="apellido" selected>Apellido</option>
                         </select>
                     &nbsp;
-                    
+
                     <form id="searchForm" action="#" role="search">
                       <input type="search" placeholder="Search something ..."  v-model="buscar"  @keyup.enter="listarInstructor(1,buscar,criterio)" class="form-control" >
                       </form>
                       <button type="submit" @click="listarInstructor(1,buscar,criterio)"  class="btn btn-gradient-03 mr-1 mb-2" ><i class="fa fa-search"></i> Buscar</button>
                   </div>
               </div>
-          
-              <div class="col-md-1">         
+
+              <div class="col-md-1">
           <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="abrirModal('instructor', 'registrar')">Agregar instructor</button>
+          <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="cargarPDF()">Cargar pdf</button>
               </div>
           </div>
-       
+
 
         </div>
         <div class="widget-body">
             <div class="table-responsive">
                 <table id="sorting-table" class="table mb-0">
                     <thead>
-                        <tr>                                    
+                        <tr>
                           <th>Nombre</th>
                           <th>Apellido</th>
                           <th>Correo</th>
@@ -82,7 +83,7 @@
                                     <td v-text="instructor.apellido"></td>
                                     <td v-text="instructor.correo"></td>
                                     <td v-text="instructor.nombre_academia"></td>
-                           
+
                                     <td>
                                       <div v-if="instructor.condicion">
                                         <span style="width:100px;"><span class="badge-text badge-text-small success">Activo</span></span>
@@ -102,18 +103,18 @@
                                 <a type="button" @click="activarInstructor(instructor.id)"><i class="la la-check delete"></i></a>
                             </template>
                             </td>
-                          
+
 
 
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
-            
-            
+
+
+
             <nav>
-   
+
             <ul class="pagination">
                 <li class="page-item" v-if="pagination.current_page > 1">
                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
@@ -126,9 +127,9 @@
                 </li>
             </ul>
           </nav>
-          
-          
-          
+
+
+
         </div>
     </div>
     <!-- End Sorting -->
@@ -150,30 +151,30 @@
                      </button>
                 </div>
                 <div class="modal-body">
-    
-                  
-                  
-                  
+
+
+
+
                   <div class="widget-body">
                    <!--- class="needs-validation" novalidate--->
-                    
-                    
+
+
                   <form>
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Nombre</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Nombre *</label>
                           <div class="col-lg-5">
                               <input type="text" class="form-control" placeholder="Ingresa el nombre" v-model="nombre" required>
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Apellido</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Apellido *</label>
                           <div class="col-lg-5">
                               <input type="text" class="form-control" placeholder="Ingresa el apellido" v-model="apellido" required>
                           </div>
                       </div>
-                    
-                    
+
+
                       <div class="form-group row d-flex align-items-center mb-5">
                           <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Correo electronico *</label>
                           <div class="col-lg-5">
@@ -186,42 +187,52 @@
                               </div>
                           </div>
                       </div>
-                    
-                    
-                                   
+
+
+
                      <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Academia </label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Academia *</label>
                           <div class="col-lg-5">
                               <select  class="custom-select form-control" v-model="id_academia" required>
                                   <option value="0" disabled>Seleccione</option>
                                   <option v-for="academia in arrayAcademia" :key="academia.id" :value="academia.id" v-text="academia.nombre"></option>
-                             </select>  
+                             </select>
                               <div class="invalid-feedback">
-                                  Porfavor ingresa una academia valida 
+                                  Porfavor ingresa una academia valida
                               </div>
                           </div>
                       </div>
-             
+
+                    <div v-show="errorInstructor" class="form-group row div-error">
+                        <div class="text-center text-error">
+                          <div class="alert alert-outline-danger dotted" role="alert" v-for="error in errorMsjInstructor" :key="error" v-text="error">
+
+                          </div>
+
+                        </div>
+                      </div>
+
+
                   </form
-                    
+
                   </div>
               </div>
-                  
-                  
-          
+
+
+
                 <div class="modal-footer">
                         <button type="button" class="btn btn-shadow" @click="cerrarModal()">Cerrar</button>
                         <button type="button"  class="btn btn-gradient-01"  v-if="tipoAccion==1" @click="registrarInstructor()">Guardar</button>
                         <button type="button"  class="btn btn-gradient-01"  v-if="tipoAccion==2" @click="actualizarInstructor()">Modificar</button>
-                    
+
                 </div>
             </div>
         </div>
     </div>
     <!-- End Large Modal -->
-  
 
-      
+
+
 </div>
 </div>
 </template>
@@ -265,21 +276,21 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
                 var pagesArray = [];
                 while(from <= to) {
                     pagesArray.push(from);
                     from++;
                 }
-                return pagesArray;             
+                return pagesArray;
             }
         },
         methods : {
@@ -294,6 +305,11 @@
                 .catch(function (error) {
                     console.log(error.response);
                 });
+            },
+            cargarPDF(){
+
+              window.open('http://devsora.me/instructor/listarPDF', 'blank');
+              //window.open('http://devsora.me', 'blank');
             },
             selectAcademia(){
                 let me=this;
@@ -318,7 +334,7 @@
                 if (this.validarInstructor()){
                     return;
                 }
-                
+
                 let me = this;
                 axios.post('/instructor/registrar',{
                     'nombre': this.nombre,
@@ -336,7 +352,7 @@
                if (this.validarInstructor()){
                     return;
                 }
-                
+
                 let me = this;
                 axios.put('/instructor/actualizar',{
                     'nombre': this.nombre,
@@ -349,7 +365,7 @@
                     me.listarInstructor(1,'','nombre');
                 }).catch(function (error) {
                     console.log(error);
-                }); 
+                });
             },
           desactivarInstructor(id){
             this.mensaje = confirm("¿Está seguro que desea desactivar el instructor?");
@@ -367,7 +383,7 @@
           },
           activarInstructor(id){
              this.mensaje = confirm("¿Está seguro que desea activar el contacto?");
-              
+
               if (this.mensaje) {
                 let me = this;
                     axios.put('/instructor/activar',{
@@ -383,7 +399,16 @@
             validarInstructor(){
                 this.errorInstructor=0;
                 this.errorMsjInstructor =[];
-                if (!this.nombre) this.errorMsjInstructor.push("El nombre del instructor no puede estar vacío.");
+                if(!this.nombre){
+                  this.errorMsjInstructor.push("El nombre del instructor no puede estar vacío");
+                }else if(!this.apellido){
+                  this.errorMsjInstructor.push("El apellido del instructor no puede estar vacío");
+                }else if(!this.correo){
+                  this.errorMsjInstructor.push("El correo del instructor no puede estar vacío");
+                }else if(!this.id_academia){
+                  this.errorMsjInstructor.push("La academia del instructor no puede estar vacío");
+                }
+
                 if (this.errorMsjInstructor.length) this.errorInstructor = 1;
                 return this.errorInstructor;
             },
@@ -427,7 +452,7 @@
                         }
                     }
                     this.selectAcademia();
-                    
+
                 }
             }
         },
@@ -436,7 +461,7 @@
         }
     }
 </script>
-<style>    
+<style>
     .modal-content{
         width: 100% !important;
         position: absolute !important;
@@ -457,5 +482,3 @@
         font-weight: bold;
     }
 </style>
-
-

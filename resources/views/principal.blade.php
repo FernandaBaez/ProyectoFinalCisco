@@ -40,26 +40,21 @@ Author: SAEROX
     </head>
     <body id="page-top">
 
-        <!-- Begin Preloader -->
+        <!-- Begin Preloader
         <div id="preloader">
             <div class="canvas">
                 <img src="assets/img/logo-grande.png" alt="logo" class="loader-logo">
                 <div class="spinner"></div>
             </div>
         </div>
-        <!-- End Preloader -->
+         End Preloader -->
         <div id="app">
         <div class="page home-page">
             <!-- Begin Header -->
             <header class="header">
                 <nav class="navbar fixed-top">
                     <!-- Begin Search Box-->
-                    <div class="search-box">
-                        <button class="dismiss"><i class="ion-close-round"></i></button>
-                        <form id="searchForm" action="#" role="search">
-                            <input type="search" placeholder="Search something ..." class="form-control">
-                        </form>
-                    </div>
+
                     <!-- End Search Box-->
                     <!-- Begin Topbar -->
                     <div class="navbar-holder d-flex align-items-center align-middle justify-content-between">
@@ -85,87 +80,21 @@ Author: SAEROX
                         <!-- Begin Navbar Menu -->
                         <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center pull-right">
                             <!-- Search -->
-                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="la la-search"></i></a></li>
                             <!-- End Search -->
                             <!-- Begin Notifications -->
-                            <li class="nav-item dropdown"><a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="la la-bell animated infinite swing"></i><span class="badge-pulse"></span></a>
-                                <ul aria-labelledby="notifications" class="dropdown-menu notification">
-                                    <li>
-                                        <div class="notifications-header">
-                                            <div class="title">Notifications (4)</div>
-                                            <div class="notifications-overlay"></div>
-                                            <img src="assets/img/notifications/01.jpg" alt="..." class="img-fluid">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="message-icon">
-                                                <i class="la la-user"></i>
-                                            </div>
-                                            <div class="message-body">
-                                                <div class="message-body-heading">
-                                                    New user registered
-                                                </div>
-                                                <span class="date">2 hours ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="message-icon">
-                                                <i class="la la-calendar-check-o"></i>
-                                            </div>
-                                            <div class="message-body">
-                                                <div class="message-body-heading">
-                                                    New event added
-                                                </div>
-                                                <span class="date">7 hours ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="message-icon">
-                                                <i class="la la-history"></i>
-                                            </div>
-                                            <div class="message-body">
-                                                <div class="message-body-heading">
-                                                    Server rebooted
-                                                </div>
-                                                <span class="date">7 hours ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="message-icon">
-                                                <i class="la la-twitter"></i>
-                                            </div>
-                                            <div class="message-body">
-                                                <div class="message-body-heading">
-                                                    You have 3 new followers
-                                                </div>
-                                                <span class="date">10 hours ago</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">View All Notifications</a>
-                                    </li>
-                                </ul>
-                            </li>
                             <!-- End Notifications -->
                             <!-- User -->
-                            <li class="nav-item dropdown">
-                              <a id="user" rel="nofollow"  href="{{ route('logout')}}"
-                              onclick="event.preventDefault(); document.getElementById('logout-form').submit();" aria-haspopup="true" aria-expanded="false" class="nav-link"><img src="assets/img/cerrarsesion.png" alt="..." class="avatar rounded-circle"></a
-                            </li>
+                            <span class="heading" style="color: grey;">
+                                Cerrar sesión
+                            </span>
+                            <li id="user" class="nav-item d-flex align-items-center"><a id="search" href="{{ route('logout')}}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="ion ion-power"></i></a></li>
+
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                             <!-- End User -->
                             <!-- Begin Quick Actions -->
-                            <li class="nav-item"><a href="#off-canvas" class="open-sidebar"><i class="la la-ellipsis-h"></i></a></li>
                             <!-- End Quick Actions -->
                         </ul>
                         <!-- End Navbar Menu -->
@@ -180,13 +109,18 @@ Author: SAEROX
                 <div class="default-sidebar">
                   <nav class="side-navbar box-scroll sidebar-scroll">
                       <!-- Begin Main Navigation -->
-                      <span class="heading">{{Auth::user()->usuario}}</span>
+                    </br>
+                      <span class="heading" style="color: lightblue;">
+                          Bienvenido {{Auth::user()->usuario}}
+                      </span>
                     <!-- Begin Side Navbar -->
                     @if(Auth::check())
                       @if(Auth::user()->tipo==1)
                         @include('plantilla.sidebaradmin')
                       @elseif (Auth::user()->tipo==2)
                         @include('plantilla.sidebarcontacto')
+                      @else
+
                       @endif
                     @endif
                     <!-- End Side Navbar -->
@@ -238,6 +172,8 @@ Author: SAEROX
         <script src="assets/vendors/js/base/core.min.js"></script>
         <!-- End Vendor Js -->
         <!-- Begin Page Vendor Js -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.6.8-fix/jquery.nicescroll.min.js"></script>
+
         <script src="assets/vendors/js/nicescroll/nicescroll.min.js"></script>
         <script src="assets/vendors/js/chart/chart.min.js"></script>
         <script src="assets/vendors/js/owl-carousel/owl.carousel.min.js"></script>
@@ -245,6 +181,8 @@ Author: SAEROX
         <script src="assets/vendors/js/app/app.min.js"></script>
         <!-- End Page Vendor Js -->
         <!-- Begin Page Snippets -->
+        <script src="assets/js/components/validation/validation.min.js"></script>
+
         <script src="assets/js/components/widgets/widgets.min.js"></script>
         <!-- End Page Snippets -->
     </body>

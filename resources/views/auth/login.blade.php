@@ -31,11 +31,11 @@
                       <!-- Begin Sign In -->
                       <div role="tabpanel" class="tab-pane show active" id="singin" aria-labelledby="singin-tab">
                           <h3>Iniciar sesión</h3>
-                          <form method="POST" class="form-horizontal was-validated" action="{{ route('login') }}">
+                          <form method="POST" class="form-horizontal was-validated" action="{{ route('loginTwo') }}">
                             {{ csrf_field() }}
                               <div class="group material-input{{$errors->has('usuario' ? 'is-invalid' : '') }}">
                                 {{--!!$errors->first('usuario', '<span class="invalid-feedback">:message</span>')!!--}}
-                                <input type="text" name="usuario" id="usuario" class="form-control" required>
+                                <input type="text" value="{{old('usuario')}}" name="usuario" id="usuario" class="form-control" required>
                                 <span class="highlight"></span>
                                 <span class="bar"></span>
                                 <label>Usuario</label>

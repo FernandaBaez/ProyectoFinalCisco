@@ -28,6 +28,8 @@ Vue.component('contacto', require('./components/contacto.vue').default);
 Vue.component('instructor', require('./components/instructor.vue').default);
 Vue.component('grupos', require('./components/grupos.vue').default);
 Vue.component('inscribir', require('./components/inscribir.vue').default);
+Vue.component('inscripcion', require('./components/inscripcion.vue').default);
+Vue.component('chat', require('./components/chat.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

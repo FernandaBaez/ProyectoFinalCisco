@@ -8,24 +8,24 @@
               <h2 class="page-header-title">Academias</h2>
               <div>
               <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="/"><i class="ti ti-home"></i></a></li>
                   <li class="breadcrumb-item active">Academias</li>
               </ul>
               </div>
           </div>
         </div>
     </div>
-      
-      
-      
+
+
+
     <!-- Sorting -->
-      
+
     <div class="row">
     <div class="col-xl-12">
     <div class="widget has-shadow">
      <div class="widget-header bordered no-actions d-flex align-items-center">
-       
-             <!-- Begin Search Box 
+
+             <!-- Begin Search Box
                     <div class="search-box">
                         <button class="dismiss"><i class="ion-close-round"></i></button>
                         <form id="searchForm" action="#" role="search">
@@ -33,11 +33,11 @@
                         </form>
                     </div>
                 End Search Box-->
-       
+
         <div class="form-group row">
               <div class="col-md-11">
                   <div class="input-group">
-                     <!--  
+                     <!--
                     <select class="form-control col-md-3" v-model="criterio">
                         <option value="nombre">Nombre</option>
                         <option value="direccion">Direccion</option>
@@ -48,19 +48,19 @@
                             <option value="direccion">Direccion</option>
                         </select>
                     &nbsp;
-                    
+
                     <form id="searchForm" action="#" role="search">
                       <input type="search" placeholder="Search something ..."  v-model="buscar"  @keyup.enter="listarAcademia(1,buscar,criterio)" class="form-control" >
                       </form>
                       <button type="submit" @click="listarAcademia(1,buscar,criterio)"  class="btn btn-gradient-03 mr-1 mb-2" ><i class="fa fa-search"></i> Buscar</button>
                   </div>
               </div>
-          
-              <div class="col-md-1">         
+
+              <div class="col-md-1">
           <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="abrirModal('academia', 'registrar')">Agregar academia</button>
               </div>
           </div>
-       
+
 
         </div>
         <div class="widget-body">
@@ -107,18 +107,18 @@
                                 <a type="button" @click="activarAcademia(academia.id)"><i class="la la-check delete"></i></a>
                             </template>
                             </td>
-                          
+
 
 
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
-            
-            
+
+
+
             <nav>
-   
+
             <ul class="pagination">
                 <li class="page-item" v-if="pagination.current_page > 1">
                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
@@ -131,9 +131,9 @@
                 </li>
             </ul>
           </nav>
-          
-          
-          
+
+
+
         </div>
     </div>
     <!-- End Sorting -->
@@ -159,64 +159,64 @@
                    <!--- class="needs-validation" novalidate--->
                   <form>
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Nombre</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Nombre *</label>
                           <div class="col-lg-5">
                               <input type="text" class="form-control" placeholder="Ingresa el nombre" v-model="nombre" required>
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Direccion</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Direccion *</label>
                           <div class="col-lg-5">
-                              <input type="text" class="form-control" placeholder="Ingresa la direccion" v-model="direccion" required>
+                              <input type="text" class="form-control" placeholder="Ingresa la direccion" v-model="direccion" >
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
                           <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Direccion 2</label>
                           <div class="col-lg-5">
                               <input type="text" class="form-control" placeholder="Ingresa la direccion" v-model="direccion2" required>
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Pais</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Pais *</label>
                           <div class="col-lg-5">
                               <input type="text" class="form-control" placeholder="Ingresa el pais" v-model="pais" required>
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Estado</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Estado *</label>
                           <div class="col-lg-5">
                               <input type="text" class="form-control" placeholder="Ingresa el estado" v-model="estado" required>
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Ciudad</label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Ciudad *</label>
                           <div class="col-lg-5">
-                              <input type="text" class="form-control" placeholder="Ingresa la ciudad" v-model="ciudad" required>
+                              <input type="text" class="form-control" placeholder="Ingresa la ciudad" v-model="ciudad" required >
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
                           <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Codigo postal</label>
                           <div class="col-lg-5">
-                              <input type="text" class="form-control" placeholder="Ingresa el codigo postal" v-model="cp" required>
+                              <input type="text" class="form-control" placeholder="Ingresa el codigo postal" v-model="cp" >
                           </div>
                       </div>
-                    
+
                       <div class="form-group row d-flex align-items-center mb-5">
                           <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Sitio</label>
                           <div class="col-lg-5">
-                              <input type="text" class="form-control" placeholder="Ingresa el sitio web" v-model="sitio" required>
+                              <input type="text" class="form-control" placeholder="Ingresa el sitio web" v-model="sitio" >
                           </div>
                       </div>
-            
-                    
+
+
                       <div class="form-group row d-flex align-items-center mb-5">
-                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Tipo </label>
+                          <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Tipo *</label>
                           <div class="col-lg-5">
                               <div class="select">
                                   <select class="custom-select form-control" v-model="tipo" required>
@@ -230,7 +230,7 @@
                               </div>
                           </div>
                       </div>
-                      
+
                       <div v-show="errorAcademia" class="form-group row div-error">
                         <div class="text-center text-error">
                           <div class="alert alert-outline-danger dotted" role="alert" v-for="error in errorMsjAcademia" :key="error" v-text="error">
@@ -246,13 +246,13 @@
                         <button type="button" class="btn btn-shadow" @click="cerrarModal()">Cerrar</button>
                         <button type="button" class="btn btn-primary" v-if="tipoAccion==1" @click="registrarAcademia()">Guardar</button>
                         <button type="button" class="btn btn-primary" v-if="tipoAccion==2" @click="actualizarAcademia()">Modificar</button>
-                    
+
                 </div>
             </div>
         </div>
     </div>
     <!-- End Large Modal -->
-  
+
 </div>
 </template>
 
@@ -262,7 +262,7 @@
         data(){
           return{
             academia_id: 0,
-            nombre :'', 
+            nombre :'',
             direccion : '',
             direccion2 : '',
             pais : '',
@@ -299,28 +299,28 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
                 var pagesArray = [];
                 while(from <= to) {
                     pagesArray.push(from);
                     from++;
                 }
-                return pagesArray;             
+                return pagesArray;
             }
         },
         methods: {
           listarAcademia(page,buscar,criterio){
             let me=this;
             var url= '/academia?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
-            
+
             axios.get(url).then(function (response) {
               var respuesta= response.data;
               me.arrayAcademia = respuesta.academias.data;
@@ -339,23 +339,23 @@
               me.listarAcademia(page,buscar,criterio);
           },
           registrarAcademia(){
-            /*
+
           if(this.validarAcademia()){
             return;
-          }*/
-            
+          }
+
             let me=this;
             axios.post('/academia/registrar',{
               'nombre': this.nombre,
               'direccion': this.direccion,
               'direccion2': this.direccion2,
               'pais': this.pais,
-              'estado': this.estado, 
+              'estado': this.estado,
               'ciudad': this.ciudad,
               'cp': this.cp,
               'sitio': this.sitio,
               'tipo': this.tipo
-              
+
             }).then(function (response) {
               me.cerrarModal();
               me.listarAcademia(1,'','nombre');
@@ -365,17 +365,17 @@
             });
           },
           actualizarAcademia(){
-            /*
+
           if(this.validarAcademia()){
             return;
-          }*/
+          }
               let me = this;
               axios.put('/academia/actualizar',{
                   'nombre': this.nombre,
                   'direccion': this.direccion,
                   'direccion2': this.direccion2,
                   'pais': this.pais,
-                  'estado': this.estado, 
+                  'estado': this.estado,
                   'ciudad': this.ciudad,
                   'cp': this.cp,
                   'sitio': this.sitio,
@@ -386,7 +386,7 @@
                   me.listarAcademia(1,'','nombre');
               }).catch(function (error) {
                   console.log(error.response);
-              }); 
+              });
           },
           desactivarAcademia(id){
             this.mensaje = confirm("¿Está seguro que desea desactivar la academia?");
@@ -404,7 +404,7 @@
           },
           activarAcademia(id){
              this.mensaje = confirm("¿Está seguro que desea activar la academia?");
-              
+
               if (this.mensaje) {
                 let me = this;
                     axios.put('/academia/activar',{
@@ -420,25 +420,25 @@
           validarAcademia(){
             this.errorAcademia = 0;
             this.errorMsjAcademia = [];
-            
-            if(!this.nombre){ 
+
+            if(!this.nombre){
               this.errorMsjAcademia.push("El nombre de la academia no puede estar vacío");
-            }else if(!this.direccion){ 
+            }else if(!this.direccion){
               this.errorMsjAcademia.push("La dirección de la academia no puede estar vacío");
-            }else if(!this.pais){ 
+            }else if(!this.pais){
               this.errorMsjAcademia.push("El pais de la academia no puede estar vacío");
-            }else if(!this.estado){ 
+            }else if(!this.estado){
               this.errorMsjAcademia.push("El estado de la academia no puede estar vacío");
-            }else if(!this.ciudad){ 
+            }else if(!this.ciudad){
               this.errorMsjAcademia.push("La ciudad de la academia no puede estar vacío");
-            }else if(!this.tipo){ 
+            }else if(!this.tipo){
               this.errorMsjAcademia.push("El tipo de la academia no puede estar vacío");
             }
-            
+
             if(this.errorMsjAcademia.length) this.errorAcademia = 1;
             return this.errorAcademia;
-            
-            
+
+
           },
           cerrarModal(){
             this.modal = 0;
@@ -497,7 +497,7 @@
                 }
             }
           }
-          
+
         },
         mounted() {
             this.listarAcademia(1,this.buscar,this.criterio);

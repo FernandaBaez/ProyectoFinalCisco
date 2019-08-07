@@ -1,8 +1,5 @@
 <ul class="list-unstyled">
 
-
-    <li @click="menu=6"><a href="#"><i class="la la-book"></i><span>Cursos</span></a></li>
-
     <li class="active"><a href="#dropdown-forms" aria-expanded="true" data-toggle="collapse"><i class="la la-graduation-cap"></i><span>Instructores</span></a>
         <ul id="dropdown-forms" class="collapse list-unstyled show pt-0">
             <li @click="menu=7"><a href="#">Instructores</a></li>

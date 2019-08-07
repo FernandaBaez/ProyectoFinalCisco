@@ -28,13 +28,13 @@
           <grupos></grupos>
         </template>
         <template v-if="menu==9">
-          <tickets></tickets>
+          <chat></chat>
         </template>
         <template v-if="menu==10">
           <calendario></calendario>
         </template>
         <template v-if="menu==11">
-          <inscribir></inscribir>
+          <inscripcion></inscripcion>
         </template>
     @elseif (Auth::user()->tipo==2)
       <template v-if="menu==7">
@@ -46,6 +46,7 @@
       <template v-if="menu==9">
         <tickets></tickets>
       </template>
+    @else
     @endif
   @endif
 

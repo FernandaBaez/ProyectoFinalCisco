@@ -14,47 +14,70 @@ class InscripcionController extends Controller
      */
     public function index(Request $request)
     {
-        
-        if(!$request->ajax()){
-          return redirect('/');
-        }
-      
+
+        //if(!$request->ajax return redirect('/'); }
+
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-         
-        /*if ($buscar==''){
-            $inscripciones = Inscripcion::orderBy('id', 'desc')->paginate(2);
+        $id_grupo = $request->id_grupo;
+
+
+        if($id_grupo==''){
+          if ($buscar==''){
+            $inscripciones = Inscripcion::join('instructor', 'Inscripcion.id_instructor','=','instructor.id')
+            ->join('Grupos', 'Inscripcion.id_grupo','=','Grupos.id')
+            ->join('Cursos', 'Grupos.id_curso', '=', 'Cursos.id')
+            ->select('Inscripcion.id','Inscripcion.id_instructor', 'Inscripcion.id_grupo', 'Inscripcion.estado', 'Inscripcion.condicion','Grupos.id_curso as id_curso', 'Cursos.nombre as nombre_curso')
+            ->orderBy('Inscripcion.id', 'desc')->paginate(5);
+          }
+          else{
+            $inscripciones = Inscripcion::join('instructor', 'Inscripcion.id_instructor','=','instructor.id')
+            ->join('Grupos', 'Inscripcion.id_grupo','=','Grupos.id')
+            ->join('Cursos', 'Grupos.id_curso', '=', 'Cursos.id')
+            ->select('Inscripcion.id','Inscripcion.id_instructor', 'Inscripcion.id_grupo', 'Inscripcion.estado', 'Inscripcion.condicion','Grupos.id_curso as id_curso', 'Cursos.nombre as nombre_curso')
+            ->where('Inscripcion.'.$criterio, 'like', '%'. $buscar . '%') //falta or
+            ->orderBy('Inscripcion.id', 'desc')->paginate(5);
+          }
+          return [
+              'pagination' => [
+                  'total'        => $inscripciones->total(),
+                  'current_page' => $inscripciones->currentPage(),
+                  'per_page'     => $inscripciones->perPage(),
+                  'last_page'    => $inscripciones->lastPage(),
+                  'from'         => $inscripciones->firstItem(),
+                  'to'           => $inscripciones->lastItem(),
+              ],
+              'inscripciones' => $inscripciones
+          ];
         }
         else{
-            $inscripciones = Inscripcion::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(2);
-        }*/
-      
-       if ($buscar==''){
-              $inscripciones = Inscripcion::join('instructor', 'instructor_curso.id_instructor','=','instructor.id')
-              ->join('Cursos', 'instructor_curso.id_curso','=','Cursos.id')
-              ->select('instructor_curso.id','instructor_curso.id_instructor', 'instructor_curso.id_curso', 'instructor_curso.requiere_orientacion','instructor_curso.fecha_s', 'instructor_curso.horario', 'instructor_curso.fecha_p', 'Cursos.nombre as nombre_curso', 'instructor.nombre as nombre_instructor',  'instructor_curso.condicion')
-              ->orderBy('instructor_curso.id', 'desc')->paginate(5);
+          if($buscar==''){
+            $inscripciones = Inscripcion::join('instructor', 'Inscripcion.id_instructor','=','instructor.id')
+            ->join('Grupos', 'Inscripcion.id_grupo','=','Grupos.id')
+            ->select('Inscripcion.id','Inscripcion.id_instructor', 'Inscripcion.id_grupo', 'Inscripcion.estado', 'instructor.nombre as nombre_instructor', 'instructor.apellido as apellido_instructor')
+            ->where('Inscripcion.id_grupo', $id_grupo)
+            ->orderBy('instructor.id', 'desc')->paginate(5);
+          }
+          else{
+            $inscripciones = Inscripcion::join('instructor', 'Inscripcion.id_instructor','=','instructor.id')
+            ->join('Grupos', 'Inscripcion.id_grupo','=','Grupos.id')
+            ->join('Cursos', 'Grupos.id_curso', '=', 'Cursos.id')
+            ->select('Inscripcion.id','Inscripcion.id_instructor', 'Inscripcion.id_grupo', 'Inscripcion.estado', 'Inscripcion.condicion','Grupos.id_curso as id_curso', 'Cursos.nombre as nombre_curso', 'instructor.nombre as nombre_instructor', 'instructor.apellido as apellido_instructor' )
+            ->where('Inscripcion.'.$criterio, 'like', '%'. $buscar . '%')
+            ->orderBy('Inscripcion.id', 'desc')->paginate(5);
+          }
+          return [
+              'pagination' => [
+                  'total'        => $inscripciones->total(),
+                  'current_page' => $inscripciones->currentPage(),
+                  'per_page'     => $inscripciones->perPage(),
+                  'last_page'    => $inscripciones->lastPage(),
+                  'from'         => $inscripciones->firstItem(),
+                  'to'           => $inscripciones->lastItem(),
+              ],
+              'inscripciones' => $inscripciones
+          ];
         }
-        else{
-              $inscripciones = Inscripcion::join('instructor', 'instructor_curso.id_instructor','=','instructor.id')
-              ->join('Cursos', 'instructor_curso.id_curso','=','Cursos.id')
-              ->select('instructor_curso.id','instructor_curso.id_instructor', 'instructor_curso.id_curso', 'instructor_curso.requiere_orientacion','instructor_curso.fecha_s', 'instructor_curso.horario', 'instructor_curso.fecha_p', 'Cursos.nombre as nombre_curso', 'instructor.nombre as nombre_instructor',  'instructor_curso.condicion')
-              ->where('instructor_curso.'.$criterio, 'like', '%'. $buscar . '%')
-              ->orderBy('instructor_curso.id', 'desc')->paginate(5);
-        }
-        
- 
-        return [
-            'pagination' => [
-                'total'        => $inscripciones->total(),
-                'current_page' => $inscripciones->currentPage(),
-                'per_page'     => $inscripciones->perPage(),
-                'last_page'    => $inscripciones->lastPage(),
-                'from'         => $inscripciones->firstItem(),
-                'to'           => $inscripciones->lastItem(),
-            ],
-            'inscripciones' => $inscripciones
-        ];
     }
 
 
@@ -71,13 +94,11 @@ class InscripcionController extends Controller
         }
         $inscripcion = new Inscripcion();
         $inscripcion->id_instructor = $request->id_instructor;
-        $inscripcion->id_curso = $request->id_curso;
-        $inscripcion->requiere_orientacion = $request->requiere_orientacion;
-        $inscripcion->fecha_s = $request->fecha_s;
-        $inscripcion->fecha_p = $request->fecha_p;
-        $inscripcion->horario = $request->horario;
+        $inscripcion->id_grupo = $request->id_grupo;
+        $inscripcion->estado = "En espera";
         $inscripcion->condicion = '1';
         $inscripcion->save();
+
     }
 
     /**
@@ -87,18 +108,15 @@ class InscripcionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if(!$request->ajax()){
           return redirect('/');
         }
         $inscripcion = Inscripcion::findOrFail($request->id);
         $inscripcion->id_instructor = $request->id_instructor;
-        $inscripcion->id_curso = $request->id_curso;
-        $inscripcion->requiere_orientacion = $request->requiere_orientacion;
-        $inscripcion->fecha_s = $request->fecha_s;
-        $inscripcion->fecha_p = $request->fecha_p;
-        $inscripcion->horario = $request->horario;
+        $inscripcion->id_grupo = $request->id_grupo;
+        $inscripcion->estado = "En espera";
         $inscripcion->condicion = '1';
         $inscripcion->save();
     }
@@ -110,6 +128,7 @@ class InscripcionController extends Controller
         }
         $inscripcion = Inscripcion::findOrFail($request->id);
         $inscripcion->condicion = '0';
+        //$inscripcion->encurso = '0';
         $inscripcion->save();
     }
     public function activar(Request $request)
@@ -119,6 +138,7 @@ class InscripcionController extends Controller
         }
         $inscripcion = Inscripcion::findOrFail($request->id);
         $inscripcion->condicion = '1';
+        //$inscripcion->encurso = '0';
         $inscripcion->save();
     }
 

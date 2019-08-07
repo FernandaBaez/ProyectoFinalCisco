@@ -16,18 +16,18 @@ class CursoController extends Controller
         if(!$request->ajax()){
           return redirect('/');
         }
-      
+
         $buscar = $request->buscar;
         $criterio = $request->criterio;
-         
+
         if ($buscar==''){
-            $cursos = Curso::orderBy('id', 'asc')->paginate(5);
+            $cursos = Curso::orderBy('id', 'desc')->paginate(5);
         }
         else{
-            $cursos = Curso::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'asc')->paginate(5);
+            $cursos = Curso::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(5);
         }
-         
- 
+
+
         return [
             'pagination' => [
                 'total'        => $cursos->total(),
@@ -53,6 +53,7 @@ class CursoController extends Controller
       $curso = new Curso();
       $curso->nombre = $request->nombre;
       $curso->descripcion = $request->descripcion;
+      $curso->fecha = $request->fecha;
       $curso->condicion = '1';
       $curso->save();
     }
@@ -60,7 +61,7 @@ class CursoController extends Controller
     public function selectCurso(Request $request){
         if (!$request->ajax()) return redirect('/');
         $curso = Curso::where('condicion','=','1')
-        ->select('id','nombre')->orderBy('nombre', 'asc')->get();
+        ->select('id','nombre')->orderBy('nombre', 'desc')->get();
         return ['cursos' => $curso];
     }
     /**
@@ -75,6 +76,7 @@ class CursoController extends Controller
       $curso = Curso::findOrFail($request->id);
       $curso->nombre = $request->nombre;
       $curso->descripcion = $request->descripcion;
+      $curso->fecha = $request->fecha;
       $curso->condicion = '1';
       $curso->save();
     }

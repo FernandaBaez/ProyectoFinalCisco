@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Grupo;
+use Carbon\Carbon;
+
 
 class GrupoController extends Controller
 {
@@ -15,13 +17,17 @@ class GrupoController extends Controller
 
         if ($buscar==''){
           $grupos = Grupo::join('academia','Grupos.id_academia','=','academia.id')
-          ->select('Grupos.id', 'Grupos.id_academia', 'Grupos.nombre', 'Grupos.descripcion', 'academia.nombre as nombre_academia')
+          ->join('Cursos', 'Grupos.id_curso', '=', 'Cursos.id')
+          ->select('Grupos.id', 'Cursos.id as id_curso', 'Grupos.id_academia', 'Grupos.descripcion', 'Grupos.fecha_creado','academia.nombre as nombre_academia', 'Cursos.nombre as nombre_curso',  'Grupos.condicion')
           ->orderBy('Grupos.id', 'desc')->paginate(5);
         }
         else{
           $grupos = Grupo::join('academia','Grupos.id_academia','=','academia.id')
-          ->select('Grupos.id', 'Grupos.id_academia', 'Grupos.nombre', 'Grupos.descripcion', 'academia.nombre as nombre_academia')
+          ->join('Cursos', 'Grupos.id_curso', '=', 'Cursos.id')
+          ->select('Grupos.id', 'Cursos.id as id_curso', 'Grupos.id_academia', 'Grupos.descripcion', 'Grupos.fecha_creado','academia.nombre as nombre_academia', 'Cursos.nombre as nombre_curso',  'Grupos.condicion')
           ->where('Grupos.'.$criterio, 'like', '%'. $buscar . '%')
+          ->orWhere('academia.'.$criterio, 'like', '%'. $buscar . '%')
+          ->orWhere('Cursos.'.$criterio, 'like', '%'. $buscar . '%')
           ->orderBy('Grupos.id', 'desc')->paginate(5);
         }
 
@@ -44,7 +50,8 @@ class GrupoController extends Controller
       if(!$request->ajax()) return redirect('/');
       $grupo = new Grupo();
       $grupo->id_academia = $request->id_academia;
-      $grupo->nombre = $request->nombre;
+      $grupo->id_curso = $request->id_curso;
+      $grupo->fecha_creado = Carbon::now()->format('Y-m-d');
       $grupo->descripcion = $request->descripcion;
       $grupo->condicion = '1';
       $grupo->save();
@@ -55,7 +62,7 @@ class GrupoController extends Controller
       if(!$request->ajax()) return redirect('/');
       $grupo = Grupo::findOrFail($request->id);
       $grupo->id_academia = $request->id_academia;
-      $grupo->nombre = $request->nombre;
+      $grupo->id_curso = $request->id_curso;
       $grupo->descripcion = $request->descripcion;
       $grupo->condicion = '1';
       $grupo->save();

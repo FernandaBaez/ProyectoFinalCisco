@@ -208,23 +208,21 @@
                     </div>
                     
                     
-                    <div class="form-group row mb-5">
-                      <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Horario *</label>
-                      <div class="col-lg-1">
-                          <div class="custom-control custom-radio styled-radio mb-4">
-                              <input class="custom-control-input" type="radio" v-model="horario">
-                              <label class="custom-control-descfeedback" for="11:00 - 13:00">11:00 - 13:00</label>
-                              
+                     <div class="form-group row d-flex align-items-center mb-5">
+                      <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Horario </label>
+                          <div class="col-lg-5">
+                              <select  class="custom-select form-control" v-model="horario" required>
+                                  <option value="0" disabled>Seleccione</option>
+                                  <option value="11:00 - 13:00">11:00 - 13:00</option>
+                                  <option value="16:00 - 18:00">16:00 - 18:00</option>
+                             </select>  
+                              <div class="invalid-feedback">
+                                  Porfavor ingresa una opcion valida 
+                              </div>
+                            
                           </div>
                       </div>
-                      <div class="col-lg-1">
-                          <div class="custom-control custom-radio styled-radio mb-4">
-                              <input class="custom-control-input" type="radio" v-model="horario">
-                              <label class="custom-control-descfeedback" for="11:00 - 13:00">16:00 - 18:00</label>
-                              
-                          </div>
-                      </div>
-                  </div>
+                       
                     
                        <div class="form-group row d-flex align-items-center mb-5">
                            <label class="col-lg-4 form-control-label d-flex justify-content-lg-end">Curso solicitado </label>
@@ -405,9 +403,7 @@
                 });
             },
             actualizarInscripcion(){
-               /*if (this.validarInstructor()){
-                    return;
-                }*/
+              
                 
                 let me = this;
                 axios.put('/inscripcion/actualizar',{

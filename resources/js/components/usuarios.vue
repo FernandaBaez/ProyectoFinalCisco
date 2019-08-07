@@ -8,24 +8,24 @@
               <h2 class="page-header-title">Usuarios</h2>
               <div>
               <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="db-default.html"><i class="ti ti-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="/"><i class="ti ti-home"></i></a></li>
                   <li class="breadcrumb-item active">Usuarios</li>
               </ul>
               </div>
           </div>
         </div>
     </div>
-      
-      
-      
+
+
+
     <!-- Sorting -->
-      
+
     <div class="row">
     <div class="col-xl-12">
     <div class="widget has-shadow">
      <div class="widget-header bordered no-actions d-flex align-items-center">
-       
-             <!-- Begin Search Box 
+
+             <!-- Begin Search Box
                     <div class="search-box">
                         <button class="dismiss"><i class="ion-close-round"></i></button>
                         <form id="searchForm" action="#" role="search">
@@ -33,11 +33,11 @@
                         </form>
                     </div>
                 End Search Box-->
-       
+
         <div class="form-group row">
               <div class="col-md-11">
                   <div class="input-group">
-                     <!--  
+                     <!--
                     <select class="form-control col-md-3" v-model="criterio">
                         <option value="nombre">Nombre</option>
                         <option value="direccion">Direccion</option>
@@ -47,19 +47,19 @@
                             <option value="usuario" selected>Usuario</option>
                         </select>
                     &nbsp;
-                    
+
                     <form id="searchForm" action="#" role="search">
                       <input type="search" placeholder="Search something ..."  v-model="buscar"  @keyup.enter="listarUsuario(1,buscar,criterio)" class="form-control" >
                       </form>
                       <button type="submit" @click="listarUsuario(1,buscar,criterio)"  class="btn btn-gradient-03 mr-1 mb-2" ><i class="fa fa-search"></i> Buscar</button>
                   </div>
               </div>
-          
-              <div class="col-md-1">         
+
+              <div class="col-md-1">
           <button type="button" class="btn btn-gradient-03 mr-1 mb-2" @click="abrirModal('usuario', 'registrar')">Agregar usuarios</button>
               </div>
           </div>
-       
+
 
         </div>
         <div class="widget-body">
@@ -96,18 +96,18 @@
                                 <a type="button" @click="activarUsuario(usuario.id)"><i class="la la-check delete"></i></a>
                             </template>
                             </td>
-                          
+
 
 
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
-            
-            
+
+
+
             <nav>
-   
+
             <ul class="pagination">
                 <li class="page-item" v-if="pagination.current_page > 1">
                     <a class="page-link" href="#" @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)">Ant</a>
@@ -120,9 +120,9 @@
                 </li>
             </ul>
           </nav>
-          
-          
-          
+
+
+
         </div>
     </div>
     <!-- End Sorting -->
@@ -144,10 +144,10 @@
                      </button>
                 </div>
                 <div class="modal-body">
-    
-                  
-                  
-                  
+
+
+
+
                   <div class="widget-body">
                    <!--- class="needs-validation" novalidate--->
                   <form >
@@ -165,26 +165,26 @@
                                   Porfavor ingresa una contraseña
                               </div>
                           </div>
-                        
+
                       </div>
-                      
+
                   </form>
                   </div>
               </div>
-                  
-                  
-          
+
+
+
                 <div class="modal-footer">
                         <button type="button" class="btn btn-shadow" @click="cerrarModal()">Cerrar</button>
                         <button type="button"  class="btn btn-gradient-01"  v-if="tipoAccion==1" @click="registrarUsuario()">Guardar</button>
                         <button type="button"  class="btn btn-gradient-01"  v-if="tipoAccion==2" @click="actualizarUsuario()">Modificar</button>
-                    
+
                 </div>
             </div>
         </div>
     </div>
     <!-- End Large Modal -->
-  
+
 </div>
 </template>
 
@@ -193,7 +193,7 @@
         data(){
           return{
             usuario_id: 0,
-            usuario :'', 
+            usuario :'',
             password : '',
             arrayUsuario: [],
             modal: 0,
@@ -223,28 +223,28 @@
                 if(!this.pagination.to) {
                     return [];
                 }
-                
-                var from = this.pagination.current_page - this.offset; 
+
+                var from = this.pagination.current_page - this.offset;
                 if(from < 1) {
                     from = 1;
                 }
-                var to = from + (this.offset * 2); 
+                var to = from + (this.offset * 2);
                 if(to >= this.pagination.last_page){
                     to = this.pagination.last_page;
-                }  
+                }
                 var pagesArray = [];
                 while(from <= to) {
                     pagesArray.push(from);
                     from++;
                 }
-                return pagesArray;             
+                return pagesArray;
             }
         },
         methods: {
           listarUsuario(page,buscar,criterio){
             let me=this;
             var url= '/usuario?page=' + page + '&buscar='+ buscar + '&criterio='+ criterio;
-            
+
             axios.get(url).then(function (response) {
               var respuesta= response.data;
               me.arrayUsuario = respuesta.usuarios.data;
@@ -263,16 +263,16 @@
               me.listarUsuario(page,buscar,criterio);
           },
           registrarUsuario(){
-            
+
             if(this.validarUsuario()){
               return;
             }
-            
+
             let me=this;
             axios.post('/usuario/registrar',{
               'usuario': this.usuario,
               'password': this.password
-              
+
             }).then(function (response) {
               me.cerrarModal();
               me.listarUsuario(1,'','usuario');
@@ -282,7 +282,7 @@
             });
           },
           actualizarUsuario(){
-             
+
               let me = this;
               axios.put('/usuario/actualizar',{
                   'usuario': this.usuario,
@@ -293,7 +293,7 @@
                   me.listarUsuario(1,'','usuario');
               }).catch(function (error) {
                   console.log(error.response);
-              }); 
+              });
           },
           desactivarUsuario(id){
             this.mensaje = confirm("¿Está seguro que desea desactivar el usuario?");
@@ -311,7 +311,7 @@
           },
           activarUsuario(id){
              this.mensaje = confirm("¿Está seguro que desea activar el usuario?");
-              
+
               if (this.mensaje) {
                 let me = this;
                     axios.put('/usuario/activar',{
@@ -327,17 +327,17 @@
           validarUsuario(){
             this.errorUsuario = 0;
             this.errorMsjUsuario = [];
-            
-            if(!this.usuario){ 
+
+            if(!this.usuario){
               this.errorMsjUsuario.push("El nombre de usuario no puede estar vacío");
-            }else if(!this.password){ 
+            }else if(!this.password){
               this.errorMsjUsuario.push("La contraseña no puede estar vacío");
             }
-            
+
             if(this.errorMsjUsuario.length) this.errorUsuario = 1;
             return this.errorUsuario;
-            
-            
+
+
           },
           cerrarModal(){
             this.modal = 0;
@@ -375,7 +375,7 @@
                 }
             }
           }
-          
+
         },
         mounted() {
             this.listarUsuario(1,this.buscar,this.criterio);
@@ -404,4 +404,3 @@
     font-weight: bold;
   }
 </style>
-
